@@ -1,6 +1,6 @@
 services:
   # Service name
-  bitwarden-rest-api-server:
+  bitwarden-api:
     image: ghcr.io/kimdre/bitwarden-rest-api-server:latest
     # Specify sensitive environment variables in a .env file
     environment:
