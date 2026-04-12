@@ -1,0 +1,19 @@
+services:
+  # Service name
+  bitwarden-rest-api-server:
+    image: ghcr.io/kimdre/bitwarden-rest-api-server:latest
+    # Specify sensitive environment variables in a .env file
+    environment:
+      - BW_HOST=${BW_HOST:-https://vault.bitwarden.com}
+      - BW_CLIENTID=${BW_CLIENTID:?error}
+      - BW_CLIENTSECRET=${BW_CLIENTSECRET:?error}
+      - BW_PASSWORD=${BW_PASSWORD:?error}
+    ports:
+      - "8087:8087"
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "http://localhost:8087/sync?force=true", "--post-data=''" ]
+      start_period: 20s
+      retries: 3
+      interval: 120s
+      timeout: 10s

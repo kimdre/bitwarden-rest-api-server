@@ -1,0 +1,28 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices",
+    "config:automergeAll"
+  ],
+  "dependencyDashboardLabels": ["dependencies"],
+  "labels": ["dependencies"],
+  "timezone": "Europe/Berlin",
+  "schedule": ["after 3am and before 7am"],
+  "customManagers": [
+    {
+      "description": "Bitwarden CLI",
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^.github/workflows/build.yml$/",
+        "/^dev.compose.yml$/"
+      ],
+      "matchStrings": [
+        "BW_CLI_VERSION: \"(?<currentValue>.*?)\"",
+        "- BW_CLI_VERSION=(?<currentValue>.*?)\\s"
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "bitwarden/clients",
+      "extractVersionTemplate": "^cli-v(?<version>.*?)$"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+services:
+  # Service name
+  bitwarden-rest-api-server:
+    pull_policy: build
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - BW_CLI_VERSION=2026.3.0
