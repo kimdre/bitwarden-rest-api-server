@@ -2,7 +2,10 @@
 
 set -eo pipefail
 
-bw config server "$BW_HOST"
+# Logout any existing sessions to ensure a clean state after a container restart
+bw logout > /dev/null || true
+
+bw config server "$BW_HOST"; echo
 
 if [ -n "$BW_CLIENTID" ] && [ -n "$BW_CLIENTSECRET" ]; then
     echo "Using apikey to log in"
