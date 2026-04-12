@@ -3,15 +3,27 @@ FROM debian:sid
 # Bitwarden CLI listens on this port for http requests
 EXPOSE 8087/tcp
 
-ENV BW_HOST=https://vault.bitwarden.com
+ENV BW_HOST=https://vault.bitwarden.com \
+    BITWARDENCLI_APPDATA_DIR=/data
+
+WORKDIR /
+
+ARG UID=1000
+ARG GID=$UID
+
+RUN apt update && \
+    apt install -y wget unzip && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    groupadd --gid $GID bitwardencli && \
+    useradd --uid $UID --gid $GID -m bitwardencli && \
+    mkdir -p ${BITWARDENCLI_APPDATA_DIR} && \
+    chown -R bitwardencli:bitwardencli ${BITWARDENCLI_APPDATA_DIR}
+
+COPY entrypoint.sh /
 
 # https://github.com/bitwarden/clients/releases?q=CLI
 ARG BW_CLI_VERSION
-
-RUN apt update && \
-    apt install -y wget unzip
-
-COPY entrypoint.sh /
 
 RUN if [ -z "$BW_CLI_VERSION" ]; then \
         echo "BW_CLI_VERSION is not set. Fetching latest version from GitHub..." && \
@@ -25,6 +37,8 @@ RUN if [ -z "$BW_CLI_VERSION" ]; then \
     rm -rfv *.zip
 
 CMD ["/entrypoint.sh"]
+
+USER bitwardencli
 
 HEALTHCHECK --start-period=20s --retries=3 --interval=120s --timeout=10s \
     CMD ["wget", "-q", "http://localhost:8087/sync?force=true", "--post-data=''"]

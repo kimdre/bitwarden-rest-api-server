@@ -12,6 +12,11 @@ services:
       - "8087:8087"
     restart: unless-stopped
     init: true
+    read_only: true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /data:uid=1000,gid=1000,mode=755
     healthcheck:
       test: [ "CMD", "wget", "-q", "http://localhost:8087/sync?force=true", "--post-data=''" ]
       start_period: 20s
