@@ -11,6 +11,7 @@ services:
     ports:
       - "8087:8087"
     restart: unless-stopped
+    init: true
     healthcheck:
       test: [ "CMD", "wget", "-q", "http://localhost:8087/sync?force=true", "--post-data=''" ]
       start_period: 20s
