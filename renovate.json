@@ -4,6 +4,7 @@
     "config:best-practices",
     "config:automergeAll"
   ],
+  "ignoreTests": true,
   "dependencyDashboardLabels": ["dependencies"],
   "labels": ["dependencies"],
   "timezone": "Europe/Berlin",
