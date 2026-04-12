@@ -22,6 +22,13 @@ The docker container will automatically configure the CLI/API to use this host w
 
 > 🔗 [Using an API key](https://bitwarden.com/help/cli/#using-an-api-key)
 
+### Running the container
+To run the container, use the following command:
+
+```sh
+docker compose up -d
+```
+
 ### API Endpoints
 
 ### Example Usage
@@ -32,7 +39,7 @@ You can run commands in the local host's shell using `curl`:
 The `/sync` endpoint synchronizes the vault with the Bitwarden server.
 
 By default, the vault is automatically synchronized every 2 minutes via the container health check.
-To change the synchronization interval, you can modify the `interval` parameter in the `healthcheck` section of the `docker-compose.yml` file:
+To change the synchronization interval, you can modify the `interval` parameter in the `healthcheck` section of the [`docker-compose.yml`](docker-compose.yml) file:
 
 ```yaml
 healthcheck:
