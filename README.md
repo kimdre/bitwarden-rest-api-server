@@ -31,6 +31,8 @@ docker compose up -d
 
 ### API Endpoints
 
+See the [API documentation](https://bitwarden.com/help/vault-management-api/) for a complete list of available endpoints and their usage.
+
 ### Example Usage
 You can run commands in the local host's shell using `curl`:
 
