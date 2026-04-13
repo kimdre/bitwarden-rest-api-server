@@ -12,6 +12,10 @@
       "matchDatasources": ["docker"],
       "matchFileNames": ["docker-compose.yml"],
       "pinDigests": false
+    },
+    {
+      "matchDepNames": ["bitwarden/clients"],
+      "changelogUrl": "https://github.com/bitwarden/clients/releases?q=cli-v"
     }
   ],
   "customManagers": [
