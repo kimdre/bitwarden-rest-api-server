@@ -4,7 +4,8 @@ FROM debian:sid@sha256:bcd97037d04fa619b2aad55c3bf32b0f4f590dc6c5a77d86b1f9c42b3
 EXPOSE 8087/tcp
 
 ENV BW_HOST=https://vault.bitwarden.com \
-    BITWARDENCLI_APPDATA_DIR=/data
+    BITWARDENCLI_APPDATA_DIR=/data \
+    VAULT_SYNC_INTERVAL=120
 
 WORKDIR /
 
