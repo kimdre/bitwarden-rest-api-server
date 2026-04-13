@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-set -eo pipefail
+#!/busybox/sh
+set -eu
 
 VAULT_SYNC_INTERVAL="${VAULT_SYNC_INTERVAL:-120}"
 
@@ -18,7 +18,7 @@ cleanup() {
     kill "$BW_PID"   2>/dev/null || true
     wait "$BW_PID"   2>/dev/null || true
 }
-trap cleanup SIGTERM SIGINT
+trap cleanup TERM INT
 
 # Logout any existing sessions to ensure a clean state after a container restart
 bw logout > /dev/null 2>&1 || true
@@ -34,10 +34,10 @@ fi
 if [ -n "$BW_CLIENTID" ] && [ -n "$BW_CLIENTSECRET" ]; then
     echo "Using apikey to log in"
     bw login --apikey --raw
-    export BW_SESSION=$(bw unlock --passwordenv BW_PASSWORD --raw)
+    export BW_SESSION="$(bw unlock --passwordenv BW_PASSWORD --raw)"
 else
     echo "Using username and password to log in"
-    export BW_SESSION=$(bw login "$BW_USER" --passwordenv BW_PASSWORD --raw)
+    export BW_SESSION="$(bw login "$BW_USER" --passwordenv BW_PASSWORD --raw)"
 fi
 
 bw unlock --check; echo

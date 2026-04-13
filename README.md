@@ -33,6 +33,8 @@ The docker container will automatically configure the CLI/API to use this host w
 The vault state/data is by default stored in a temporary volume (tmpfs) that is deleted when the container is removed.
 To persist the vault data across container restarts, you can modify the `docker-compose.yml` file to use a named volume instead of a tmpfs, see the [persistent-data.compose.yml](persistent-data.compose.yml) file for the necessary changes.
 
+The persistent-data patch includes a helper service to set ownership on the named volume to `65532:65532`, which matches the nonroot runtime user in the image.
+
 You can change the path of the vault data with the `BITWARDENCLI_APPDATA_DIR` environment variable, which is by default set to `/data` in the container.
 
 To run the container with a persistent volume, add the patch to the compose command like this:
@@ -72,6 +74,15 @@ You can also trigger a manual synchronization using the following command:
 curl -X POST http://localhost:8087/sync?force=true
 ```
 
+## Runtime Base and Permissions
+
+The container runtime uses `gcr.io/distroless/base-debian13:debug-nonroot` and runs as `UID:GID 65532:65532`.
+
+- `docker-compose.yml` mounts `/data` as tmpfs with `uid=65532,gid=65532`.
+- `persistent-data.compose.yml` includes a one-shot `set_permissions` service that applies `chown -R 65532:65532 /data` for the named volume.
+- If you use your own bind mount for `/data`, make sure it is writable by `65532:65532`.
+
+
 ## Building and running the image locally
 
 1. Clone the repository
@@ -81,6 +92,14 @@ curl -X POST http://localhost:8087/sync?force=true
    docker compose -f docker-compose.yml -f dev.compose.yml up
    ```
 
+## CI smoke test
+
+GitHub Actions includes a lightweight smoke check in `.github/workflows/build.yml` (`docker-smoke` job) that runs before publish:
+
+1. Builds the Docker image
+2. Runs `bw --version` inside the built image
+
 ## Links
 - [Bitwarden Password Manager CLI Documentation](https://bitwarden.com/help/cli/)
 - [Bitwarden Vault Management API Documentation](https://bitwarden.com/help/vault-management-api/)
+

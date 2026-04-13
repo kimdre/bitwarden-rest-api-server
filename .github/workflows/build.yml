@@ -9,18 +9,42 @@ on:
     branches:
       - main
 
+env:
+  # https://github.com/bitwarden/clients/releases?q=CLI
+  BW_CLI_VERSION: 2026.3.0
+
 jobs:
+  docker-smoke:
+    name: Docker smoke test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Build image
+        run: |
+          docker build \
+            --build-arg BW_CLI_VERSION=${BW_CLI_VERSION} \
+            -t bitwarden-rest-api-smoke:${{ github.sha }} \
+            .
+
+      - name: Smoke test bw --version
+        run: |
+          version="$(docker run --rm --entrypoint /usr/local/bin/bw bitwarden-rest-api-smoke:${{ github.sha }} --version)"
+          echo "Detected bw version: ${version}"
+          echo "${version}" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+'
+
   build:
     name: Build image
+    needs: docker-smoke
     runs-on: ubuntu-latest
     permissions:
       packages: write
       contents: read
       attestations: write
       id-token: write
-    env:
-      # https://github.com/bitwarden/clients/releases?q=CLI
-      BW_CLI_VERSION: 2026.3.0
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6

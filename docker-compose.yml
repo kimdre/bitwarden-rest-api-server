@@ -16,4 +16,4 @@ services:
     cap_drop:
       - ALL
     tmpfs:
-      - /data:uid=1000,gid=1000,mode=755
+      - /data:uid=65532,gid=65532,mode=755
