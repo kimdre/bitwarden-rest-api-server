@@ -8,7 +8,6 @@
   "dependencyDashboardLabels": ["dependencies"],
   "labels": ["dependencies"],
   "timezone": "Europe/Berlin",
-  "schedule": ["after 3am and before 7am"],
   "packageRules": [
     {
       "matchDatasources": ["docker"],
