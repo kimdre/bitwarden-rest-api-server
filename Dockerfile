@@ -1,5 +1,5 @@
-# syntax=docker/dockerfile:1.7
-FROM debian:sid AS downloader
+# syntax=docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+FROM debian:sid@sha256:bcd97037d04fa619b2aad55c3bf32b0f4f590dc6c5a77d86b1f9c42b306e2cfc AS downloader
 
 WORKDIR /tmp
 
@@ -23,7 +23,7 @@ RUN if [ -z "$BW_CLI_VERSION" ]; then \
     chmod +x /tmp/bw && \
     mkdir -p /tmp/data
 
-FROM gcr.io/distroless/base-debian13:debug-nonroot
+FROM gcr.io/distroless/base-debian13:debug-nonroot@sha256:12732ca606c382f68fc868a3c46114d60b4dc94cf13f8fde9cf36e58c2047b8b
 
 # Bitwarden CLI listens on this port for http requests
 EXPOSE 8087/tcp
