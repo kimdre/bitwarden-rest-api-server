@@ -1,5 +1,4 @@
 services:
-  # Service name
   bitwarden-api:
     pull_policy: build
     build:
