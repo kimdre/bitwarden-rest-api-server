@@ -9,6 +9,13 @@
   "labels": ["dependencies"],
   "timezone": "Europe/Berlin",
   "schedule": ["after 3am and before 7am"],
+  "packageRules": [
+    {
+      "matchDatasources": ["docker"],
+      "matchFileNames": ["docker-compose.yml"],
+      "pinDigests": false
+    }
+  ],
   "customManagers": [
     {
       "description": "Bitwarden CLI",
