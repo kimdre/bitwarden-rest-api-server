@@ -34,7 +34,7 @@ ENV BW_HOST=https://vault.bitwarden.com \
 
 WORKDIR /
 
-COPY --from=downloader --chown=65532:65532 /tmp/bw /usr/local/bin/bw
+COPY --from=downloader --chown=65532:65532 --chmod=0755 /tmp/bw /usr/local/bin/bw
 COPY --from=downloader --chown=65532:65532 /tmp/data $BITWARDENCLI_APPDATA_DIR
 COPY --from=downloader /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
 COPY --from=downloader /usr/lib/x86_64-linux-gnu/libgcc_s.so.1 /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
