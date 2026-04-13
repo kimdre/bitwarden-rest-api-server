@@ -1,0 +1,18 @@
+services:
+  bitwarden-api:
+    volumes:
+      - data:/data
+    tmpfs: []
+    depends_on:
+      set_permissions:
+        condition: "service_completed_successfully"
+
+  set_permissions:
+    image: busybox:latest
+    command: sh -c "chown -R 1000:1000 /data"
+    volumes:
+      - data:/data
+    restart: "no"
+
+volumes:
+  data:

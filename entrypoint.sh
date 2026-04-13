@@ -1,9 +1,26 @@
 #!/usr/bin/env bash
-
 set -eo pipefail
 
+VAULT_SYNC_INTERVAL="${VAULT_SYNC_INTERVAL:-120}"
+
+vault_sync_loop() {
+    while true; do
+        sleep "$VAULT_SYNC_INTERVAL"
+        bw sync --force
+    done
+}
+
+# Graceful shutdown: forward signals to both child processes
+cleanup() {
+    echo "Shutting down gracefully..."
+    kill "$SYNC_PID" 2>/dev/null || true
+    kill "$BW_PID"   2>/dev/null || true
+    wait "$BW_PID"   2>/dev/null || true
+}
+trap cleanup SIGTERM SIGINT
+
 # Logout any existing sessions to ensure a clean state after a container restart
-bw logout > /dev/null || true
+bw logout > /dev/null 2>&1 || true
 
 bw config server "$BW_HOST"; echo
 
@@ -18,5 +35,14 @@ fi
 
 bw unlock --check; echo
 
-echo 'Running `bw server` on port 8087'
-exec bw serve --hostname 0.0.0.0 #--disable-origin-protection
+# Start background sync loop — inherits stdout/stderr, visible in docker logs
+vault_sync_loop &
+SYNC_PID=$!
+
+# Start bw serve in background so the shell (PID 1) can handle signals
+echo 'Running `bw serve` on port 8087'
+bw serve --hostname 0.0.0.0 &
+BW_PID=$!
+
+# Wait for bw serve; container exits when it does
+wait "$BW_PID"

@@ -40,22 +40,40 @@ You can run commands in the local host's shell using `curl`:
 
 The `/sync` endpoint synchronizes the vault with the Bitwarden server.
 
-By default, the vault is automatically synchronized every 2 minutes via the container health check.
-To change the synchronization interval, you can modify the `interval` parameter in the `healthcheck` section of the [`docker-compose.yml`](docker-compose.yml) file:
-
-```yaml
-healthcheck:
-  test: ["CMD", "wget", "-q", "http://localhost:8087/sync?force=true", "--post-data=''"]
-  start_period: 20s
-  retries: 3
-  interval: 120s
-  timeout: 10s
-```
+By default, the vault is automatically synchronized every 120 seconds.
+To change the synchronization interval, you set the `VAULT_SYNC_INTERVAL` environment variable to a desired value in seconds (e.g., `VAULT_SYNC_INTERVAL=60` for 1 minute).
 
 You can also trigger a manual synchronization using the following command:
 
 ```sh
 curl -X POST http://localhost:8087/sync?force=true
+```
+
+#### Persistence
+
+The vault data is stored in a temporary volume (tmpfs) that is deleted when the container is removed.
+To persist the vault data across container restarts, you can modify the `docker-compose.yml` file to use a named volume instead of a tmpfs:
+
+You can change the path of the vault data with the `BITWARDENCLI_APPDATA_DIR` environment variable, which is by default set to `/data` in the container.
+
+```yaml
+volumes:
+  vault-data:
+
+services:
+  bitwarden-api:
+    volumes:
+      - vault-data:/data
+    depends_on:
+      set_permissions:
+         condition: "service_completed_successfully"
+
+  set_permissions:
+    image: busybox:latest
+    command: sh -c "chown -R 1000:1000 /data"
+    volumes:
+       - vault-data:/data
+    restart: "no"
 ```
 
 ## Building and running the image locally

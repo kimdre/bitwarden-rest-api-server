@@ -40,5 +40,5 @@ CMD ["/entrypoint.sh"]
 
 USER bitwardencli
 
-HEALTHCHECK --start-period=20s --retries=3 --interval=120s --timeout=10s \
-    CMD ["wget", "-q", "http://localhost:8087/sync?force=true", "--post-data=''"]
+HEALTHCHECK --start-period=15s --start-interval=5s --interval=10s --timeout=3s --retries=1 \
+    CMD ["sh", "-ec", "status=\"$(wget -qO- http://localhost:8087/status)\" && echo \"$status\" | grep -Eq '\"success\"[[:space:]]*:[[:space:]]*true' && echo \"$status\" | grep -Eq '\"status\"[[:space:]]*:[[:space:]]*\"unlocked\"'"]
