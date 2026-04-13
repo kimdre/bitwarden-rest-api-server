@@ -2,7 +2,7 @@ services:
   bitwarden-api:
     volumes:
       - data:/data
-    tmpfs: []
+    tmpfs: !reset []
     depends_on:
       set_permissions:
         condition: "service_completed_successfully"
