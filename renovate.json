@@ -28,7 +28,7 @@
         "(?m)^\\s*-\\s*BW_CLI_VERSION=(?<currentValue>[^\\s#]+)\\s*(?:#.*)?$",
         "(?m)^\\s*ARG\\s+BW_CLI_VERSION=(?<currentValue>[^\\s#]+)\\s*(?:#.*)?$"
       ],
-      "datasourceTemplate": "github-tags",
+      "datasourceTemplate": "github-releases",
       "depNameTemplate": "bitwarden/clients",
       "extractVersionTemplate": "^cli-v(?<version>.*?)$"
     }
