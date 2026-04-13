@@ -1,4 +1,4 @@
-FROM debian:sid
+FROM debian:sid@sha256:bcd97037d04fa619b2aad55c3bf32b0f4f590dc6c5a77d86b1f9c42b306e2cfc
 
 # Bitwarden CLI listens on this port for http requests
 EXPOSE 8087/tcp
