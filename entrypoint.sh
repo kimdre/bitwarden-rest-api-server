@@ -22,7 +22,13 @@ trap cleanup SIGTERM SIGINT
 # Logout any existing sessions to ensure a clean state after a container restart
 bw logout > /dev/null 2>&1 || true
 
-bw config server "$BW_HOST"; echo
+CURRENT_SERVER=$(bw config server)
+if [ -n "$CURRENT_SERVER" ] && [ "$CURRENT_SERVER" != "$BW_HOST" ]; then
+  echo "Setting config server to $BW_HOST"
+  bw config server "$BW_HOST"; echo
+else
+  echo "Config server already set to $BW_HOST"
+fi
 
 if [ -n "$BW_CLIENTID" ] && [ -n "$BW_CLIENTSECRET" ]; then
     echo "Using apikey to log in"
@@ -40,7 +46,7 @@ vault_sync_loop &
 SYNC_PID=$!
 
 # Start bw serve in background so the shell (PID 1) can handle signals
-echo 'Running `bw serve` on port 8087'
+echo 'Listening on port 8087...'
 bw serve --hostname 0.0.0.0 &
 BW_PID=$!
 
