@@ -21,12 +21,14 @@
       "description": "Bitwarden CLI",
       "customType": "regex",
       "managerFilePatterns": [
-        "/^.github/workflows/build.yml$/",
-        "/^dev.compose.yml$/"
+        "/^\\.github\\/workflows\\/build\\.yml$/",
+        "/^dev\\.compose\\.yml$/",
+        "/^Dockerfile$/"
       ],
       "matchStrings": [
-        "BW_CLI_VERSION: \"(?<currentValue>.*?)\"",
-        "- BW_CLI_VERSION=(?<currentValue>.*?)\\s"
+        "(?m)^\\s*BW_CLI_VERSION:\\s*\\\"?(?<currentValue>[^\\\"\\s#]+)\\\"?\\s*(?:#.*)?$",
+        "(?m)^\\s*-\\s*BW_CLI_VERSION=(?<currentValue>[^\\s#]+)\\s*(?:#.*)?$",
+        "(?m)^\\s*ARG\\s+BW_CLI_VERSION=(?<currentValue>[^\\s#]+)\\s*(?:#.*)?$"
       ],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "bitwarden/clients",
