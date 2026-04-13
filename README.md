@@ -15,7 +15,7 @@ BW_CLIENTID=<your_client_id>
 BW_CLIENTSECRET=<your_client_secret>
 BW_PASSWORD=<your_master_password>
 
-# optoinal: set the vault synchronization interval in seconds (default is 120 seconds)
+# optional: set the vault synchronization interval in seconds (default is 120 seconds)
 VAULT_SYNC_INTERVAL=120
 
 # optional: set the path for vault data storage (default is /data in the container)
