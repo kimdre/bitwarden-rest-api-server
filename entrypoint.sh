@@ -4,10 +4,10 @@ set -eo pipefail
 VAULT_SYNC_INTERVAL="${VAULT_SYNC_INTERVAL:-120}"
 
 vault_sync_loop() {
-    echo "Starting vault sync with interval $VAULT_SYNC_INTERVAL seconds..."
     while true; do
+        echo "Next vault sync in $VAULT_SYNC_INTERVAL seconds"
         sleep "$VAULT_SYNC_INTERVAL"
-        bw sync --force
+        bw sync --force; echo
     done
 }
 
@@ -47,7 +47,7 @@ vault_sync_loop &
 SYNC_PID=$!
 
 # Start bw serve in background so the shell (PID 1) can handle signals
-echo 'Listening on port 8087...'
+echo 'Listening on port 8087'
 bw serve --hostname 0.0.0.0 &
 BW_PID=$!
 
