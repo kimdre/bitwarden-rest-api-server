@@ -1,6 +1,6 @@
 services:
   bitwarden-api:
-    image: ghcr.io/kimdre/bitwarden-rest-api-server:latest
+    image: ghcr.io/kimdre/bitwarden-rest-api-server:latest@sha256:f1aad7f56978885400125121ca7a1ce212f4ad0d176ac697d9af87e9e9731bd1
     # Specify sensitive environment variables in a .env file
     environment:
       - BW_HOST=${BW_HOST:-https://vault.bitwarden.com}
