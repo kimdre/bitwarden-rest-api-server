@@ -9,6 +9,7 @@ services:
       - BW_PASSWORD=${BW_PASSWORD:?error}
     ports:
       - "8087:8087"
+    platform: "linux/amd64"
     restart: unless-stopped
     init: true
     read_only: true
