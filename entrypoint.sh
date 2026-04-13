@@ -4,6 +4,7 @@ set -eo pipefail
 VAULT_SYNC_INTERVAL="${VAULT_SYNC_INTERVAL:-120}"
 
 vault_sync_loop() {
+    echo "Starting vault sync with interval $VAULT_SYNC_INTERVAL seconds..."
     while true; do
         sleep "$VAULT_SYNC_INTERVAL"
         bw sync --force
