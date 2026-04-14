@@ -80,6 +80,8 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           annotations: ${{ steps.meta.outputs.annotations }}
+          sbom: true
+          provenance: mode=max
           build-args: |
             BW_CLI_VERSION=${{ env.BW_CLI_VERSION  }}
           cache-from: type=gha
