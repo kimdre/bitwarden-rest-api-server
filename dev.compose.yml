@@ -3,7 +3,7 @@ services:
     #platform: "linux/amd64"
     pull_policy: build
     build:
-      context: .
+      context: src/
       dockerfile: Dockerfile
       args:
         - BW_CLI_VERSION=2026.3.0

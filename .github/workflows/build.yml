@@ -28,7 +28,7 @@ jobs:
           docker build \
             --build-arg BW_CLI_VERSION=${BW_CLI_VERSION} \
             -t bitwarden-rest-api-smoke:${{ github.sha }} \
-            .
+            src/
 
       - name: Smoke test bw --version
         run: |
@@ -75,6 +75,7 @@ jobs:
       - name: Build image
         uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7
         with:
+          context: src
           push: ${{ github.event_name != 'pull_request' }}
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}

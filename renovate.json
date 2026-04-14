@@ -25,7 +25,7 @@
       "managerFilePatterns": [
         "/^\\.github\\/workflows\\/build\\.yml$/",
         "/^dev\\.compose\\.yml$/",
-        "/^Dockerfile$/"
+        "/^src\\/Dockerfile$/"
       ],
       "matchStrings": [
         "(?m)^\\s*BW_CLI_VERSION:\\s*\\\"?(?<currentValue>[^\\\"\\s#]+)\\\"?\\s*(?:#.*)?$",
