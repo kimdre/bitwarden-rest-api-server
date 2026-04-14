@@ -54,5 +54,5 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 USER 65532:65532
 
-HEALTHCHECK --start-period=15s --start-interval=5s --interval=10s --timeout=3s --retries=1 \
+HEALTHCHECK --start-period=15s --start-interval=5s --interval=10s --timeout=3s --retries=3 \
     CMD ["/busybox/sh", "-ec", "status=\"$(/busybox/wget -qO- http://127.0.0.1:8087/status)\" && echo \"$status\" | /busybox/grep -Eq '\"success\"[[:space:]]*:[[:space:]]*true' && echo \"$status\" | /busybox/grep -Eq '\"status\"[[:space:]]*:[[:space:]]*\"unlocked\"'"]
