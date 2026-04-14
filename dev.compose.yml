@@ -1,6 +1,6 @@
 services:
   bitwarden-api:
-    platform: "linux/amd64"
+    #platform: "linux/amd64"
     pull_policy: build
     build:
       context: .
