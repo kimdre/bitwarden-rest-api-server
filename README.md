@@ -92,13 +92,6 @@ The container runtime uses `gcr.io/distroless/base-debian13:debug-nonroot` and r
    docker compose -f docker-compose.yml -f dev.compose.yml up
    ```
 
-## CI smoke test
-
-GitHub Actions includes a lightweight smoke check in `.github/workflows/build.yml` (`docker-smoke` job) that runs before publish:
-
-1. Builds the Docker image
-2. Runs `bw --version` inside the built image
-
 ## Links
 - [Bitwarden Password Manager CLI Documentation](https://bitwarden.com/help/cli/)
 - [Bitwarden Vault Management API Documentation](https://bitwarden.com/help/vault-management-api/)
