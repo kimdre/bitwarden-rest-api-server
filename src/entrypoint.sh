@@ -81,7 +81,7 @@ SYNC_PID=$!
 
 # Start bw serve in background so the shell (PID 1) can handle signals
 echo 'Listening on port 8087'
-bw serve --hostname 0.0.0.0 &
+bw serve --hostname all &
 BW_PID=$!
 
 # Wait for bw serve; container exits when it does
