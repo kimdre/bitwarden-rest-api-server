@@ -6,4 +6,4 @@ services:
       context: src/
       dockerfile: Dockerfile
       args:
-        - BW_CLI_VERSION=2026.7.0
+        - BW_CLI_VERSION=2026.8.0
