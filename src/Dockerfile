@@ -34,7 +34,7 @@ RUN if [ -z "$BW_CLI_VERSION" ]; then \
     cp /usr/lib/${LIB_ARCH}/libstdc++.so.6 /tmp/lib/${LIB_ARCH}/ && \
     cp /usr/lib/${LIB_ARCH}/libgcc_s.so.1 /tmp/lib/${LIB_ARCH}/
 
-FROM gcr.io/distroless/base-debian13:debug-nonroot@sha256:73532e54641a478ac4a0f8ebbe31e525f2c36af57a2fe10a0a3df69c40c824a6
+FROM gcr.io/distroless/base-debian13:debug-nonroot@sha256:869ec51658bd5bb8972144becb2d52fe6a94a27553b22284e45135ac7a5ac265
 
 # Bitwarden CLI listens on this port for http requests
 EXPOSE 8087/tcp
