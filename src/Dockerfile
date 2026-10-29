@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.28@sha256:bb22d9815c728170f72750f4e5b0d672e06176142e1d602c7e66c050100b7e5b
-FROM debian:sid@sha256:6ba7b75b36b5f074c82e088b90575cfde79409d3eedc53ec30441e8027a14ecd AS downloader
+FROM debian:sid@sha256:46e441d513e81eb6c04119061b4abe68a5bae6fa55fd42bf39147e7d2a548bf5 AS downloader
 
 WORKDIR /tmp
 
