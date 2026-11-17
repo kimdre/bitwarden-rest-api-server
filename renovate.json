@@ -4,7 +4,9 @@
     "config:best-practices",
     ":automergeAll"
   ],
-  "dependencyDashboardLabels": ["dependencies"],
+  "dependencyDashboard": {
+    "labels": ["dependencies"]
+  },
   "labels": ["dependencies"],
   "timezone": "Europe/Berlin",
   "packageRules": [
