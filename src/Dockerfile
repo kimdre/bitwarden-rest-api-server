@@ -26,7 +26,7 @@ RUN if [ -z "$BW_CLI_VERSION" ]; then \
         ARCH_SUFFIX=""; \
         LIB_ARCH="x86_64-linux-gnu"; \
     fi && \
-    wget -O /tmp/bw.zip https://github.com/bitwarden/clients/releases/download/cli-v${BW_CLI_VERSION}/bw-linux-${ARCH_SUFFIX}${BW_CLI_VERSION}.zip && \
+    wget -O /tmp/bw.zip https://github.com/bitwarden/clients/releases/download/cli-v${BW_CLI_VERSION}/bw-oss-linux-${ARCH_SUFFIX}${BW_CLI_VERSION}.zip && \
     unzip /tmp/bw.zip -d /tmp && \
     chmod +x /tmp/bw && \
     mkdir -p /tmp/data && \
